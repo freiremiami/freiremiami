@@ -1,0 +1,55 @@
+# Social Media Content Bot — Stock Ticker Video Pipeline
+
+Automated pipeline that turns a daily list of stock tickers into short-form
+videos, publishes them to TikTok then YouTube Shorts, and grows a real
+audience interested in stocks. No fake engagement, no view-botting — every
+platform's payout program filters that out and bans accounts for it, so it
+would defeat the purpose anyway.
+
+## Daily flow
+
+1. You (or your existing ticker-screener bot) drop today's tickers into
+   `bots/ticker_intake/` around 9:30am.
+2. `ticker_intake` pulls price/volume/news context for each ticker.
+3. `script_character` writes the script and renders it through a consistent
+   AI host persona.
+4. `video_generator` turns the script + character into the final vertical
+   video, with the compliance disclaimer burned in.
+5. `publisher` posts to TikTok first, then YouTube Shorts, on schedule.
+6. `audience_growth` finds and engages real stock-interested communities
+   (hashtags, timing, cross-promotion) — it does not generate fake views.
+
+## Bots
+
+| Folder | Responsibility |
+|---|---|
+| `bots/ticker_intake` | Ingest today's tickers, pull price/news/volume context |
+| `bots/script_character` | Generate script + consistent AI host persona |
+| `bots/video_generator` | Render the final video (TTS, video-gen API) |
+| `bots/publisher` | Post to TikTok/YouTube on schedule via official APIs |
+| `bots/audience_growth` | Real audience discovery/engagement, not fake views |
+
+## Required accounts / APIs (none wired yet — fill in `.env`)
+
+- Stock data: Alpha Vantage (already available in this workspace) or Polygon/IEX
+- Video generation: Sora / Runway / HeyGen-style API + TTS voice
+- TikTok Content Posting API (requires an approved developer app)
+- YouTube Data API v3 (requires OAuth + a channel in good standing)
+
+## Compliance — non-negotiable
+
+Every video must:
+- Carry a visible "Not financial advice" disclosure
+- Disclose any position you hold in a covered ticker
+- Avoid guaranteed-return language or "buy now" framing
+- Avoid thinly-traded/micro-cap tickers, which draw regulatory scrutiny
+
+See `shared/compliance.py` — every video's script must pass through
+`inject_disclaimer()` before it reaches `video_generator`.
+
+## Not included on purpose
+
+No bot that inflates views, likes, follows, or watch time. TikTok/YouTube
+payout programs only pay on views from unique real accounts and actively
+detect and ban for manipulated engagement — building that would get the
+account banned and forfeit any payout already earned.

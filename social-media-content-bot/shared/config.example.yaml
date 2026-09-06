@@ -1,0 +1,24 @@
+schedule:
+  ticker_intake_time: "09:30"
+  publish_platforms_in_order: ["tiktok", "youtube"]
+
+stock_data:
+  provider: "alpha_vantage"   # or "polygon", "iex"
+  api_key_env: "STOCK_DATA_API_KEY"
+
+video:
+  provider: "PLACEHOLDER"     # e.g. sora, runway, heygen
+  api_key_env: "VIDEO_GEN_API_KEY"
+  voice_id: "PLACEHOLDER"
+  character_reference_id: "PLACEHOLDER"
+
+tiktok:
+  client_key_env: "TIKTOK_CLIENT_KEY"
+  client_secret_env: "TIKTOK_CLIENT_SECRET"
+
+youtube:
+  oauth_client_secret_file: "youtube_client_secret.json"
+
+compliance:
+  require_disclaimer: true
+  max_daily_tickers: 10
