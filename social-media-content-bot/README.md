@@ -29,12 +29,13 @@ would defeat the purpose anyway.
 | `bots/publisher` | Post to TikTok/YouTube on schedule via official APIs |
 | `bots/audience_growth` | Real audience discovery/engagement, not fake views |
 
-## Required accounts / APIs (none wired yet — fill in `.env`)
+## Required accounts / APIs — fill in `.env`
 
-- Stock data: Massive (`MASSIVE_API_KEY`) — snapshot + news endpoints, already wired in `ticker_intake.py`
-- Video generation: Sora / Runway / HeyGen-style API + TTS voice
-- TikTok Content Posting API (requires an approved developer app)
-- YouTube Data API v3 (requires OAuth + a channel in good standing)
+- Stock data: Massive (`MASSIVE_API_KEY`) — snapshot + news endpoints, wired in `ticker_intake.py` ✅
+- Scriptwriting: Anthropic (`ANTHROPIC_API_KEY`) — wired in `script_character.py` ✅
+- Video generation: Sora / Runway / HeyGen-style API + TTS voice — still a stub
+- TikTok Content Posting API — client code wired (`bots/publisher/tiktok_client.py`), needs your developer app + audit
+- YouTube Data API v3 — client code wired (`bots/publisher/youtube_client.py`), needs your OAuth setup
 
 ## Compliance — non-negotiable
 
