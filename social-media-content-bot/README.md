@@ -31,7 +31,7 @@ would defeat the purpose anyway.
 
 ## Required accounts / APIs (none wired yet — fill in `.env`)
 
-- Stock data: Alpha Vantage (already available in this workspace) or Polygon/IEX
+- Stock data: Massive (`MASSIVE_API_KEY`) — snapshot + news endpoints, already wired in `ticker_intake.py`
 - Video generation: Sora / Runway / HeyGen-style API + TTS voice
 - TikTok Content Posting API (requires an approved developer app)
 - YouTube Data API v3 (requires OAuth + a channel in good standing)

@@ -8,4 +8,6 @@ each ticker with the context the script writer needs.
 **Output**: one `TickerBrief` per ticker — price, day change, volume, and the
 top 1-3 recent headlines — handed to `bots/script_character`.
 
-**Needs**: `STOCK_DATA_API_KEY` (Alpha Vantage, Polygon, or IEX).
+**Needs**: `MASSIVE_API_KEY` — pulls the snapshot from
+`/v2/snapshot/locale/us/markets/stocks/tickers/{symbol}` and headlines from
+`/v2/reference/news` on `api.massive.com`.

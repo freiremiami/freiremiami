@@ -3,8 +3,9 @@ schedule:
   publish_platforms_in_order: ["tiktok", "youtube"]
 
 stock_data:
-  provider: "alpha_vantage"   # or "polygon", "iex"
-  api_key_env: "STOCK_DATA_API_KEY"
+  provider: "massive"
+  api_key_env: "MASSIVE_API_KEY"
+  headline_count: 3
 
 video:
   provider: "PLACEHOLDER"     # e.g. sora, runway, heygen
