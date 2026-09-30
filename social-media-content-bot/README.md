@@ -33,7 +33,7 @@ would defeat the purpose anyway.
 
 - Stock data: Massive (`MASSIVE_API_KEY`) — snapshot + news endpoints, wired in `ticker_intake.py` ✅
 - Scriptwriting: Anthropic (`ANTHROPIC_API_KEY`) — wired in `script_character.py` ✅
-- Video generation: Sora / Runway / HeyGen-style API + TTS voice — still a stub
+- Video generation: HeyGen (`HEYGEN_API_KEY`, `HEYGEN_AVATAR_ID`, `HEYGEN_VOICE_ID`) — wired in `video_generator.py` ✅ (needs a one-time avatar/voice setup — see `bots/video_generator/README.md`)
 - TikTok Content Posting API — client code wired (`bots/publisher/tiktok_client.py`), needs your developer app + audit
 - YouTube Data API v3 — client code wired (`bots/publisher/youtube_client.py`), needs your OAuth setup
 

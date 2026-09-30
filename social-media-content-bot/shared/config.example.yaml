@@ -8,10 +8,11 @@ stock_data:
   headline_count: 3
 
 video:
-  provider: "PLACEHOLDER"     # e.g. sora, runway, heygen
-  api_key_env: "VIDEO_GEN_API_KEY"
-  voice_id: "PLACEHOLDER"
-  character_reference_id: "PLACEHOLDER"
+  provider: "heygen"
+  api_key_env: "HEYGEN_API_KEY"
+  voice_id_env: "HEYGEN_VOICE_ID"
+  avatar_id_env: "HEYGEN_AVATAR_ID"
+  dimension: {width: 720, height: 1280}
 
 tiktok:
   client_key_env: "TIKTOK_CLIENT_KEY"

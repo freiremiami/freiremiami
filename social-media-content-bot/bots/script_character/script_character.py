@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -46,4 +47,6 @@ def finalize_script(raw_script: str, held_positions: list[str] | None = None) ->
     return inject_disclaimer(raw_script, held_positions)
 
 
-CHARACTER_REFERENCE_ID = "PLACEHOLDER"  # fixed persona used across every episode
+# HeyGen avatar_id for the fixed host persona, reused across every episode.
+# Create the avatar once (see bots/video_generator/README.md) and set HEYGEN_AVATAR_ID.
+CHARACTER_REFERENCE_ID = os.environ.get("HEYGEN_AVATAR_ID", "PLACEHOLDER")
