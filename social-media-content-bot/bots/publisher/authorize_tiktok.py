@@ -19,7 +19,7 @@ def main(redirect_uri: str) -> None:
     auth_url = (
         "https://www.tiktok.com/v2/auth/authorize/"
         f"?client_key={client_key}"
-        "&scope=video.publish,video.upload"
+        "&scope=video.publish,video.upload,video.list"
         "&response_type=code"
         f"&redirect_uri={redirect_uri}"
         "&state=setup"

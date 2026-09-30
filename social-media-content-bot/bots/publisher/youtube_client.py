@@ -6,7 +6,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+SCOPES = [
+    "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/youtube.readonly",
+]
 TOKEN_FILE = Path(__file__).parent / ".youtube_token.json"
 CLIENT_SECRET_FILE = Path(__file__).parent / "youtube_client_secret.json"
 
@@ -57,3 +60,27 @@ def publish_video(video_path: Path, title: str, description: str, privacy_status
     while response is None:
         _, response = request.next_chunk()
     return response
+
+
+def list_recent_videos(max_results: int = 20) -> list[dict]:
+    """Read-only: the channel's own recent uploads with view counts and publish times.
+
+    Requires the youtube.readonly scope (see SCOPES above).
+    """
+    creds = _get_credentials()
+    youtube = build("youtube", "v3", credentials=creds)
+
+    channel_response = youtube.channels().list(part="contentDetails", mine=True).execute()
+    uploads_playlist_id = channel_response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+
+    playlist_response = (
+        youtube.playlistItems()
+        .list(part="contentDetails", playlistId=uploads_playlist_id, maxResults=max_results)
+        .execute()
+    )
+    video_ids = [item["contentDetails"]["videoId"] for item in playlist_response["items"]]
+    if not video_ids:
+        return []
+
+    videos_response = youtube.videos().list(part="snippet,statistics", id=",".join(video_ids)).execute()
+    return videos_response["items"]

@@ -36,6 +36,7 @@ would defeat the purpose anyway.
 - Video generation: HeyGen (`HEYGEN_API_KEY`, `HEYGEN_AVATAR_ID`, `HEYGEN_VOICE_ID`) — wired in `video_generator.py` ✅ (needs a one-time avatar/voice setup — see `bots/video_generator/README.md`)
 - TikTok Content Posting API — client code wired (`bots/publisher/tiktok_client.py`), needs your developer app + audit
 - YouTube Data API v3 — client code wired (`bots/publisher/youtube_client.py`), needs your OAuth setup
+- `bots/audience_growth` — wired ✅, reuses the same TikTok/YouTube OAuth tokens with two added read-only scopes (`video.list`, `youtube.readonly`)
 
 ## Compliance — non-negotiable
 

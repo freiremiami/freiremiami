@@ -100,6 +100,23 @@ def publish_video(video_path: Path, caption: str, privacy_level: str = "SELF_ONL
     return _poll_publish_status(publish_id, access_token)
 
 
+def list_recent_videos(max_count: int = 20) -> list[dict]:
+    """Read-only: the account's own recent posts with engagement stats.
+
+    Requires the video.list scope (see authorize_tiktok.py).
+    """
+    access_token = get_access_token()
+    fields = "id,create_time,video_description,view_count,like_count,comment_count,share_count"
+    response = requests.post(
+        f"{TIKTOK_API_BASE}/video/list/?fields={fields}",
+        headers={"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"},
+        json={"max_count": max_count},
+        timeout=10,
+    )
+    response.raise_for_status()
+    return response.json()["data"]["videos"]
+
+
 def _poll_publish_status(publish_id: str, access_token: str, max_attempts: int = 30) -> dict:
     headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"}
     for _ in range(max_attempts):
