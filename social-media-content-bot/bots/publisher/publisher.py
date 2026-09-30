@@ -1,5 +1,11 @@
+import sys
 from dataclasses import dataclass
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+import tiktok_client  # noqa: E402
+import youtube_client  # noqa: E402
 
 
 @dataclass
@@ -10,13 +16,18 @@ class PublishResult:
 
 
 def publish_to_tiktok(video_path: Path, caption: str) -> PublishResult:
-    # TODO: call the TikTok Content Posting API
-    raise NotImplementedError
+    result = tiktok_client.publish_video(video_path, caption)
+    return PublishResult(platform="tiktok", post_id=result["publish_id"], url=result.get("share_url", ""))
 
 
 def publish_to_youtube_shorts(video_path: Path, title: str, description: str) -> PublishResult:
-    # TODO: call the YouTube Data API v3 videos.insert
-    raise NotImplementedError
+    result = youtube_client.publish_video(video_path, title, description)
+    video_id = result["id"]
+    return PublishResult(
+        platform="youtube",
+        post_id=video_id,
+        url=f"https://youtube.com/shorts/{video_id}",
+    )
 
 
 def publish_daily_video(video_path: Path, caption: str) -> list[PublishResult]:
