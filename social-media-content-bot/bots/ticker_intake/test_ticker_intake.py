@@ -49,6 +49,28 @@ def test_fetch_ticker_brief_parses_real_response_shape():
     assert mock_get.call_args_list[1].args[0] == "/v2/reference/news"
 
 
+def test_fetch_ticker_brief_before_market_open_uses_previous_close():
+    premarket = {"ticker": {"todaysChangePerc": 0, "day": {"c": 0, "v": 0}, "min": {}, "prevDay": {"c": 336.67}}}
+    with patch("ticker_intake._massive_get") as mock_get:
+        mock_get.side_effect = [premarket, {"results": []}]
+        brief = fetch_ticker_brief("AAPL")
+
+    assert brief.price == 336.67
+    assert brief.volume == 0
+
+
+def test_fetch_ticker_brief_casts_float_volume_to_int():
+    snapshot = {"ticker": {**SNAPSHOT_RESPONSE["ticker"], "day": {"c": 338.49, "v": 13947783.0}}}
+    with patch("ticker_intake._massive_get") as mock_get:
+        mock_get.side_effect = [snapshot, NEWS_RESPONSE]
+        brief = fetch_ticker_brief("AAPL")
+
+    assert brief.volume == 13947783
+    assert isinstance(brief.volume, int)
+
+
 if __name__ == "__main__":
     test_fetch_ticker_brief_parses_real_response_shape()
+    test_fetch_ticker_brief_before_market_open_uses_previous_close()
+    test_fetch_ticker_brief_casts_float_volume_to_int()
     print("OK: fetch_ticker_brief parses the real Massive response shape correctly")

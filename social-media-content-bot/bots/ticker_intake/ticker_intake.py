@@ -30,11 +30,13 @@ def _massive_get(path: str, params: dict | None = None) -> dict:
 def fetch_ticker_brief(symbol: str, headline_count: int = 3) -> TickerBrief:
     snapshot = _massive_get(f"/v2/snapshot/locale/us/markets/stocks/tickers/{symbol}")["ticker"]
     news = _massive_get("/v2/reference/news", {"ticker": symbol, "limit": headline_count})["results"]
+    # Before the open the day bar is all zeros, so fall back to the latest minute bar, then yesterday's close.
+    price = snapshot["day"].get("c") or snapshot.get("min", {}).get("c") or snapshot["prevDay"]["c"]
     return TickerBrief(
         symbol=symbol,
-        price=snapshot["day"]["c"],
+        price=price,
         day_change_pct=snapshot["todaysChangePerc"],
-        volume=snapshot["day"]["v"],
+        volume=int(snapshot["day"].get("v") or 0),
         headlines=[article["title"] for article in news],
     )
 
