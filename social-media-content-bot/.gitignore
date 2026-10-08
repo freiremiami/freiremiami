@@ -1,7 +1,0 @@
-__pycache__/
-*.pyc
-.env
-bots/publisher/.tiktok_token.json
-bots/publisher/.youtube_token.json
-bots/publisher/youtube_client_secret.json
-output/
