@@ -17,12 +17,15 @@ episode, and the script's TTS voiceover comes from the same API call. (Sora's
 developer API was also shut down by OpenAI on 2026-09-24, so it's off the
 table regardless.)
 
-`generate_video()` calls `POST /v2/video/generate` with the avatar + voice +
-script, polls `GET /v1/video_status.get` until the render completes, then
-downloads the result. Captions are burned into the frame
-(`caption: {"file_format": "srt", "style": "default"}`) so the spoken
-disclaimer — already appended to every script by `compliance.py` — shows up
-as on-screen text too, not just in the audio.
+`generate_video()` calls `POST /v3/videos` with the avatar + voice + script,
+polls `GET /v3/videos/{video_id}` until the render completes, then downloads
+the result. (The older `/v2/video/generate` endpoint is removed by HeyGen on
+2026-10-31.) Captions are requested with
+`caption: {"file_format": "srt", "style": "default"}`, and the bot downloads
+`captioned_video_url`, the copy with captions burned into the frame, so the
+spoken disclaimer (already appended to every script by `compliance.py`) shows
+up as on-screen text too. If HeyGen returns no captioned copy, the run fails
+rather than posting a video without the on-screen disclaimer.
 
 ## One-time setup you need to do
 

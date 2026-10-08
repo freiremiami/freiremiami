@@ -19,6 +19,19 @@ would defeat the purpose anyway.
 6. `audience_growth` finds and engages real stock-interested communities
    (hashtags, timing, cross-promotion) — it does not generate fake views.
 
+## Running it
+
+```
+python orchestrator.py AAPL TSLA                # full run: intake, script, video, post
+python orchestrator.py AAPL --no-publish        # everything except posting; check output/
+python orchestrator.py AAPL --held AAPL         # adds the "creator holds a position" disclosure
+```
+
+Each ticker runs on its own, so one failure doesn't stop the others; the
+script and video for each land in `output/`, and the command exits non-zero
+if any ticker failed. `python test_orchestrator.py` runs the whole pipeline
+on AAPL with every outside service faked.
+
 ## Bots
 
 | Folder | Responsibility |

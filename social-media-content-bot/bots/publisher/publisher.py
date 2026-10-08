@@ -32,5 +32,6 @@ def publish_to_youtube_shorts(video_path: Path, title: str, description: str) ->
 
 def publish_daily_video(video_path: Path, caption: str) -> list[PublishResult]:
     results = [publish_to_tiktok(video_path, caption)]
-    results.append(publish_to_youtube_shorts(video_path, caption, caption))
+    # YouTube rejects titles over 100 characters; the description keeps the full caption.
+    results.append(publish_to_youtube_shorts(video_path, caption[:100], caption))
     return results
