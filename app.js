@@ -57,3 +57,44 @@ form.addEventListener("submit", (e) => {
 });
 
 render();
+
+// Settings: theme ("system", "light" or "dark"), saved separately from tasks.
+const THEME_KEY = "todo-theme";
+const settingsToggle = document.getElementById("settings-toggle");
+const settingsPanel = document.getElementById("settings-panel");
+const themeInputs = document.querySelectorAll('input[name="theme"]');
+
+function loadTheme() {
+  try {
+    const theme = localStorage.getItem(THEME_KEY);
+    return theme === "light" || theme === "dark" ? theme : "system";
+  } catch {
+    return "system";
+  }
+}
+
+function applyTheme(theme) {
+  if (theme === "system") {
+    delete document.documentElement.dataset.theme;
+  } else {
+    document.documentElement.dataset.theme = theme;
+  }
+}
+
+const currentTheme = loadTheme();
+applyTheme(currentTheme);
+themeInputs.forEach((radio) => {
+  radio.checked = radio.value === currentTheme;
+  radio.addEventListener("change", () => {
+    applyTheme(radio.value);
+    try {
+      localStorage.setItem(THEME_KEY, radio.value);
+    } catch {}
+  });
+});
+
+settingsToggle.addEventListener("click", () => {
+  const open = settingsPanel.hidden;
+  settingsPanel.hidden = !open;
+  settingsToggle.setAttribute("aria-expanded", String(open));
+});

@@ -5,10 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>To-Do List</title>
 <link rel="stylesheet" href="style.css">
+<script>
+  // Apply the saved theme before first paint so the page never flashes.
+  try {
+    const theme = localStorage.getItem("todo-theme");
+    if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+  } catch {}
+</script>
 </head>
 <body>
   <main class="app">
-    <h1>To-Do List</h1>
+    <header class="app-header">
+      <h1>To-Do List</h1>
+      <button type="button" id="settings-toggle" class="icon-button" aria-label="Settings" aria-expanded="false" aria-controls="settings-panel">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+      </button>
+    </header>
+    <section id="settings-panel" class="settings-panel" hidden>
+      <h2>Settings</h2>
+      <fieldset class="setting">
+        <legend>Theme</legend>
+        <div class="segmented">
+          <label><input type="radio" name="theme" value="system"><span>System</span></label>
+          <label><input type="radio" name="theme" value="light"><span>Light</span></label>
+          <label><input type="radio" name="theme" value="dark"><span>Dark</span></label>
+        </div>
+      </fieldset>
+    </section>
     <form id="add-form" autocomplete="off">
       <input type="text" id="task-input" placeholder="Add a task…" required>
       <button type="submit">Add</button>
