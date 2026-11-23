@@ -1,0 +1,26 @@
+schedule:
+  ticker_intake_time: "09:30"
+  publish_platforms_in_order: ["tiktok", "youtube"]
+
+stock_data:
+  provider: "massive"
+  api_key_env: "MASSIVE_API_KEY"
+  headline_count: 3
+
+video:
+  provider: "heygen"
+  api_key_env: "HEYGEN_API_KEY"
+  voice_id_env: "HEYGEN_VOICE_ID"
+  avatar_id_env: "HEYGEN_AVATAR_ID"
+  dimension: {width: 720, height: 1280}
+
+tiktok:
+  client_key_env: "TIKTOK_CLIENT_KEY"
+  client_secret_env: "TIKTOK_CLIENT_SECRET"
+
+youtube:
+  oauth_client_secret_file: "youtube_client_secret.json"
+
+compliance:
+  require_disclaimer: true
+  max_daily_tickers: 10
